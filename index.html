@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bouncing Balls Animation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: black;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            text-align: center;
+            color: white;
+            margin-top: 0;
+        }
+        canvas {
+            border: 3px solid #333;
+            display: block;
+            background: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bouncing Balls Animation</h1>
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <script>
+        // Get canvas and context
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        canvas.width = 800;
+        canvas.height = 600;
+        
+        // Rectangle boundaries
+        const rectX = 50;
+        const rectY = 50;
+        const rectWidth = canvas.width - 100;
+        const rectHeight = canvas.height - 100;
+        
+        // Ball class
+        class Ball {
+            constructor(x, y, radius, color, vx, vy, image = null) {
+                this.x = x;
+                this.y = y;
+                this.radius = radius;
+                this.color = color;
+                this.vx = vx; // velocity x
+                this.vy = vy; // velocity y
+                this.image = image;
+                this.mass = radius; // Mass proportional to radius
+            }
+            
+            update() {
+                // Update position
+                this.x += this.vx;
+                this.y += this.vy;
+                
+                // Bounce off left and right walls
+                if (this.x - this.radius <= rectX || this.x + this.radius >= rectX + rectWidth) {
+                    this.vx = -this.vx;
+                    // Ensure ball stays within bounds
+                    if (this.x - this.radius < rectX) {
+                        this.x = rectX + this.radius;
+                    } else if (this.x + this.radius > rectX + rectWidth) {
+                        this.x = rectX + rectWidth - this.radius;
+                    }
+                }
+                
+                // Bounce off top and bottom walls
+                if (this.y - this.radius <= rectY || this.y + this.radius >= rectY + rectHeight) {
+                    this.vy = -this.vy;
+                    // Ensure ball stays within bounds
+                    if (this.y - this.radius < rectY) {
+                        this.y = rectY + this.radius;
+                    } else if (this.y + this.radius > rectY + rectHeight) {
+                        this.y = rectY + rectHeight - this.radius;
+                    }
+                }
+            }
+            
+            // Check collision with another ball and resolve it
+            checkCollision(other) {
+                const dx = other.x - this.x;
+                const dy = other.y - this.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                const minDistance = this.radius + other.radius;
+                
+                if (distance < minDistance && distance > 0) {
+                    // Collision detected - resolve it
+                    const angle = Math.atan2(dy, dx);
+                    const sin = Math.sin(angle);
+                    const cos = Math.cos(angle);
+                    
+                    // Rotate ball positions
+                    const x1 = 0;
+                    const y1 = 0;
+                    const x2 = dx * cos + dy * sin;
+                    const y2 = dy * cos - dx * sin;
+                    
+                    // Rotate velocities
+                    const vx1 = this.vx * cos + this.vy * sin;
+                    const vy1 = this.vy * cos - this.vx * sin;
+                    const vx2 = other.vx * cos + other.vy * sin;
+                    const vy2 = other.vy * cos - other.vx * sin;
+                    
+                    // Collision reaction (elastic collision)
+                    const vx1Final = ((this.mass - other.mass) * vx1 + 2 * other.mass * vx2) / (this.mass + other.mass);
+                    const vx2Final = ((other.mass - this.mass) * vx2 + 2 * this.mass * vx1) / (this.mass + other.mass);
+                    
+                    // Update velocities (only x component changes in rotated space)
+                    this.vx = vx1Final * cos - vy1 * sin;
+                    this.vy = vy1 * cos + vx1Final * sin;
+                    other.vx = vx2Final * cos - vy2 * sin;
+                    other.vy = vy2 * cos + vx2Final * sin;
+                    
+                    // Separate balls to prevent overlap
+                    const overlap = minDistance - distance;
+                    const separationX = (dx / distance) * overlap * 0.5;
+                    const separationY = (dy / distance) * overlap * 0.5;
+                    
+                    this.x -= separationX;
+                    this.y -= separationY;
+                    other.x += separationX;
+                    other.y += separationY;
+                }
+            }
+            
+            draw() {
+                if (this.image && this.image.complete) {
+                    // Draw image in a circle using clipping
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.clip();
+                    
+                    // Draw the image centered
+                    const size = this.radius * 2;
+                    ctx.drawImage(this.image, this.x - this.radius, this.y - this.radius, size, size);
+                    ctx.restore();
+                    
+                    // Draw border
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.strokeStyle = 'white';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                } else {
+                    // Draw regular colored ball
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                    ctx.strokeStyle = 'white';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+            }
+        }
+        
+        // Load image for white ball
+        // Put your image file (jpg, png, etc.) in the same folder and name it "profile.jpg"
+        // You can change "profile.jpg" to match your actual image filename
+        const profileImage = new Image();
+        profileImage.onerror = function() {
+            console.log('Image not found, white ball will show as solid color');
+        };
+        profileImage.src = 'profile.jpg';
+        
+        // Create balls with different colors (8 total)
+        // Positions are spaced to avoid initial overlap
+        const balls = [
+            new Ball(150, 150, 30, 'red', 3, 2),
+            new Ball(350, 200, 30, 'blue', -2.5, 3),
+            new Ball(550, 300, 30, 'green', 2, -2.5),
+            new Ball(250, 400, 30, 'orange', -3, -2),
+            new Ball(450, 250, 60, 'white', 2.5, 3.5, profileImage), // Double size (60) and with image
+            new Ball(650, 200, 30, 'yellow', -2, 2.5),
+            new Ball(550, 450, 30, 'purple', 2.5, -2),
+            new Ball(350, 350, 30, 'cyan', -2.5, -2.5)
+        ];
+        
+        console.log('Total balls created:', balls.length);
+        
+        // Animation loop
+        function animate() {
+            // Clear canvas and fill with black
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw rectangle border
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 4;
+            ctx.strokeRect(rectX, rectY, rectWidth, rectHeight);
+            
+            // Update all balls first
+            balls.forEach(ball => {
+                ball.update();
+            });
+            
+            // Check collisions between all pairs of balls
+            for (let i = 0; i < balls.length; i++) {
+                for (let j = i + 1; j < balls.length; j++) {
+                    balls[i].checkCollision(balls[j]);
+                }
+            }
+            
+            // Draw all balls
+            balls.forEach(ball => {
+                ball.draw();
+            });
+            
+            // Continue animation
+            requestAnimationFrame(animate);
+        }
+        
+        // Start animation
+        animate();
+    </script>
+</body>
+</html>
+
