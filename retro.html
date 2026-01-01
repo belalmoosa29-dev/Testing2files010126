@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>★ Welcome to My Awesome Site! ★</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff, #06ffa5);
+            background-size: 400% 400%;
+            animation: gradientShift 5s ease infinite;
+            font-family: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif;
+            color: #00ffff;
+            text-shadow: 2px 2px 4px #000, 0 0 10px #00ffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.7);
+            border: 5px solid #ff00ff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 30px #ff00ff, inset 0 0 30px #0000ff;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 48px;
+            color: #ffff00;
+            text-shadow: 3px 3px 0px #ff00ff, 6px 6px 0px #00ffff, 0 0 20px #ffff00;
+            margin-bottom: 10px;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .marquee {
+            background: #000;
+            padding: 10px;
+            border: 2px dashed #ffff00;
+            margin: 20px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .marquee-text {
+            display: inline-block;
+            animation: scroll 15s linear infinite;
+            color: #00ff00;
+            font-size: 20px;
+        }
+        
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        .content {
+            background: rgba(255, 0, 255, 0.2);
+            border: 3px solid #00ffff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        
+        h2 {
+            color: #ff00ff;
+            font-size: 32px;
+            text-shadow: 2px 2px 0px #000, 0 0 15px #ff00ff;
+            margin-bottom: 15px;
+            border-bottom: 3px dotted #ffff00;
+            padding-bottom: 10px;
+        }
+        
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .retro-button {
+            background: linear-gradient(180deg, #ffff00, #ff8800);
+            border: 3px outset #ffff00;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+            text-decoration: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-shadow: none;
+            box-shadow: 0 5px 15px rgba(255, 255, 0, 0.5);
+            transition: all 0.1s;
+        }
+        
+        .retro-button:hover {
+            background: linear-gradient(180deg, #ff8800, #ffff00);
+            border: 3px inset #ffff00;
+            transform: translateY(2px);
+            box-shadow: 0 2px 8px rgba(255, 255, 0, 0.5);
+        }
+        
+        .retro-button:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 4px rgba(255, 255, 0, 0.5);
+        }
+        
+        .visitor-counter {
+            background: #000;
+            border: 2px solid #00ff00;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+            color: #00ff00;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .star {
+            position: absolute;
+            color: #ffff00;
+            font-size: 20px;
+            animation: twinkle 2s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.5); }
+        }
+        
+        .blink {
+            animation: blink 1s infinite;
+        }
+        
+        .rainbow-text {
+            background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbow 3s linear infinite;
+        }
+        
+        @keyframes rainbow {
+            to { background-position: 200% center; }
+        }
+        
+        .construction {
+            background: #ffff00;
+            color: #000;
+            padding: 15px;
+            border: 5px solid #000;
+            text-align: center;
+            font-weight: bold;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        li {
+            margin: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        li:before {
+            content: "★";
+            position: absolute;
+            left: 0;
+            color: #ffff00;
+        }
+        
+        a {
+            color: #00ffff;
+            text-decoration: underline;
+        }
+        
+        a:visited {
+            color: #ff00ff;
+        }
+        
+        a:hover {
+            color: #ffff00;
+            text-shadow: 0 0 10px #ffff00;
+        }
+        
+        .guestbook {
+            background: rgba(0, 255, 255, 0.1);
+            border: 2px dashed #00ffff;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        textarea, input {
+            background: #000;
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            padding: 8px;
+            font-family: 'Courier New', monospace;
+            width: 100%;
+            margin: 5px 0;
+        }
+        
+        /* Animation classes for button clicks */
+        @keyframes homeSpin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(360deg) scale(1.3); }
+            100% { transform: rotate(720deg) scale(1); }
+        }
+        
+        @keyframes aboutSlide {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-20px) rotate(-5deg); }
+            75% { transform: translateX(20px) rotate(5deg); }
+        }
+        
+        @keyframes linksShake {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-10px, -5px) rotate(-5deg); }
+            20% { transform: translate(10px, 5px) rotate(5deg); }
+            30% { transform: translate(-10px, 5px) rotate(-5deg); }
+            40% { transform: translate(10px, -5px) rotate(5deg); }
+            50% { transform: translate(-10px, -5px) rotate(-5deg); }
+            60% { transform: translate(10px, 5px) rotate(5deg); }
+            70% { transform: translate(-10px, 5px) rotate(-5deg); }
+            80% { transform: translate(10px, -5px) rotate(5deg); }
+            90% { transform: translate(-10px, -5px) rotate(-5deg); }
+        }
+        
+        @keyframes guestbookBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            25% { transform: translateY(-30px) scale(1.2); }
+            50% { transform: translateY(0) scale(1.1); }
+            75% { transform: translateY(-15px) scale(1.15); }
+        }
+        
+        @keyframes contactWave {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.2) rotate(-10deg); }
+            50% { transform: scale(1.1) rotate(10deg); }
+            75% { transform: scale(1.2) rotate(-10deg); }
+        }
+        
+        .animate-home {
+            animation: homeSpin 1s ease-in-out;
+        }
+        
+        .animate-about {
+            animation: aboutSlide 0.8s ease-in-out;
+        }
+        
+        .animate-links {
+            animation: linksShake 0.6s ease-in-out;
+        }
+        
+        .animate-guestbook {
+            animation: guestbookBounce 1s ease-in-out;
+        }
+        
+        .animate-contact {
+            animation: contactWave 0.8s ease-in-out;
+        }
+        
+        /* Full page animation effects */
+        @keyframes pageSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes pageShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        @keyframes pageBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes pageWave {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.05) rotate(2deg); }
+            75% { transform: scale(1.05) rotate(-2deg); }
+        }
+        
+        @keyframes pageSlide {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        
+        .page-animate-spin {
+            animation: pageSpin 1s ease-in-out;
+        }
+        
+        .page-animate-shake {
+            animation: pageShake 0.5s ease-in-out;
+        }
+        
+        .page-animate-bounce {
+            animation: pageBounce 0.8s ease-in-out;
+        }
+        
+        .page-animate-wave {
+            animation: pageWave 0.6s ease-in-out;
+        }
+        
+        .page-animate-slide {
+            animation: pageSlide 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="rainbow-text">★ WELCOME TO MY SITE! ★</h1>
+            <div class="marquee">
+                <div class="marquee-text">
+                    ✨ BEST VIEWED IN 800x600 ✨ BEST VIEWED IN NETSCAPE NAVIGATOR ✨ LAST UPDATED: 2002 ✨
+                </div>
+            </div>
+        </div>
+        
+        <div class="visitor-counter">
+            Visitor # <span id="counter">1337</span> | Since 2001
+        </div>
+        
+        <div class="content">
+            <h2>About Me</h2>
+            <p>Hi! Welcome to my AWESOME website! 👾🎮💻</p>
+            <p>I'm a webmaster and this is my COOL homepage where I share stuff about myself and my interests!</p>
+            <p class="blink">CHECK OUT MY LINKS BELOW!!!</p>
+        </div>
+        
+        <div class="buttons">
+            <a href="#" class="retro-button" id="btn-home">HOME</a>
+            <a href="#" class="retro-button" id="btn-about">ABOUT</a>
+            <a href="#" class="retro-button" id="btn-links">LINKS</a>
+            <a href="#" class="retro-button" id="btn-guestbook">GUESTBOOK</a>
+            <a href="#" class="retro-button" id="btn-contact">CONTACT</a>
+        </div>
+        
+        <div class="content">
+            <h2>My Favorite Things</h2>
+            <ul>
+                <li>Playing video games (especially retro ones!)</li>
+                <li>Making websites with HTML</li>
+                <li>Listening to MP3s</li>
+                <li>Chatting on IRC</li>
+                <li>Collecting GIFs</li>
+            </ul>
+        </div>
+        
+        <div class="construction">
+            ⚠️ UNDER CONSTRUCTION ⚠️<br>
+            More content coming soon!
+        </div>
+        
+        <div class="content">
+            <h2>Cool Links</h2>
+            <ul>
+                <li><a href="#">My Friend's Site</a> - Check it out!</li>
+                <li><a href="#">Free MP3 Downloads</a></li>
+                <li><a href="#">Webring</a></li>
+                <li><a href="#">Guestbook Archive</a></li>
+            </ul>
+        </div>
+        
+        <div class="guestbook">
+            <h2>Sign My Guestbook!</h2>
+            <form>
+                <input type="text" placeholder="Your Name:" required>
+                <input type="email" placeholder="Your Email:">
+                <textarea rows="4" placeholder="Leave a message:" required></textarea>
+                <button type="submit" class="retro-button">SUBMIT</button>
+            </form>
+        </div>
+        
+        <div class="content" style="text-align: center; margin-top: 30px;">
+            <p>© 2001-2025 My Awesome Site</p>
+            <p>
+                <a href="#">Back to Top</a> | 
+                <a href="mailto:webmaster@example.com">Email Me</a>
+            </p>
+            <p style="font-size: 12px; color: #888;">
+                Best viewed in Internet Explorer 5.5+ | Netscape Navigator 4.0+
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Visitor counter animation
+        let counter = 1337;
+        setInterval(() => {
+            counter += Math.floor(Math.random() * 3);
+            document.getElementById('counter').textContent = counter;
+        }, 5000);
+        
+        // Form submission (prevent default)
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thanks for signing my guestbook! (This is a demo site)');
+        });
+        
+        // Button click animations
+        const container = document.querySelector('.container');
+        
+        document.getElementById('btn-home').addEventListener('click', function(e) {
+            e.preventDefault();
+            this.classList.add('animate-home');
+            container.classList.add('page-animate-spin');
+            
+            // Remove animation classes after animation completes
+            setTimeout(() => {
+                this.classList.remove('animate-home');
+                container.classList.remove('page-animate-spin');
+            }, 1000);
+        });
+        
+        document.getElementById('btn-about').addEventListener('click', function(e) {
+            e.preventDefault();
+            this.classList.add('animate-about');
+            container.classList.add('page-animate-slide');
+            
+            setTimeout(() => {
+                this.classList.remove('animate-about');
+                container.classList.remove('page-animate-slide');
+            }, 800);
+        });
+        
+        document.getElementById('btn-links').addEventListener('click', function(e) {
+            e.preventDefault();
+            this.classList.add('animate-links');
+            container.classList.add('page-animate-shake');
+            
+            setTimeout(() => {
+                this.classList.remove('animate-links');
+                container.classList.remove('page-animate-shake');
+            }, 600);
+        });
+        
+        document.getElementById('btn-guestbook').addEventListener('click', function(e) {
+            e.preventDefault();
+            this.classList.add('animate-guestbook');
+            container.classList.add('page-animate-bounce');
+            
+            setTimeout(() => {
+                this.classList.remove('animate-guestbook');
+                container.classList.remove('page-animate-bounce');
+            }, 1000);
+        });
+        
+        document.getElementById('btn-contact').addEventListener('click', function(e) {
+            e.preventDefault();
+            this.classList.add('animate-contact');
+            container.classList.add('page-animate-wave');
+            
+            setTimeout(() => {
+                this.classList.remove('animate-contact');
+                container.classList.remove('page-animate-wave');
+            }, 800);
+        });
+    </script>
+</body>
+</html>
+
